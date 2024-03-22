@@ -2,6 +2,19 @@ const { spawn } = require("child_process");
 
 module.exports = function (html, options = []) {
     return new Promise(((resolve, reject) => {
+
+        var exec = require('child_process').exec, child;    
+        child = exec('chmod +x lib/wkhtmltopdf',
+            function (error, stdout, stderr) {
+                console.log('stdout: ' + stdout);
+                console.log('stderr: ' + stderr);
+                if (error !== null) {
+                    console.log('exec error: ' + error);
+                }
+            });
+
+
+
         const bufs = [];
         const proc = spawn("/bin/sh", ["-o", "pipefail", "-c", `lib/wkhtmltopdf ${options.join(" ")} - - | cat`]);
 
